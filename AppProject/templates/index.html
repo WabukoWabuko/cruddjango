@@ -1,0 +1,44 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Read</title>
+</head>
+<body>
+         
+         <ol>
+            
+            {% for item in items %}
+                <li>{{ item.name }} {{ item.email }}</li>
+            {% endfor %}
+                
+         </ol>
+            
+</body>
+</html> -->
+
+
+
+<!-- <h1>Create</h1>
+<form method="post">
+    {% csrf_token %}
+    <label for="">Name: <input type="text" name="name"></label>
+    <label for="">Email: <input type="email" name="email"></label>
+    <label for="">Password: <input type="password" name="password"></label>
+    <button type="submit">Save</button>
+</form> -->
+
+<!-- <h1>Update</h1>
+<form method="post">
+    {% csrf_token %}
+    <label for="">Name: <input type="text" name="name"></label>
+    <label for="">Email: <input type="email" name="email"></label>
+    <button type="submit">Update</button>
+</form> -->
+
+<h1>Delete</h1>
+<form method="post">
+    {% csrf_token %}
+    <button type="submit">Delete</button>
+</form>
