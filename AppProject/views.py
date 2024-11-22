@@ -1,33 +1,43 @@
-from django.shortcuts import render, redirect, get_list_or_404
-from .models import TestUserCrud
+from django.shortcuts import render, redirect, get_object_or_404
+from .models import PeopleM
+from .forms import PeopleForm
+
 
 # Create your views here.
-# Read 
-# def Index(request):
-#     items = TestUserCrud.objects.all()
-#     return render(request, "index.html", {"items": items})
+def list(request):
+    people = PeopleM.objects.all()
+    return render(request, 'index.html', {'people': people})
 
-# def Create(request):
-#     if request.method == "POST":
-#         name = request.POST.get("name")
-#         email = request.POST.get("email")
-#         password = request.POST.get("password")
-#         TestUserCrud.objects.create(name=name, email=email, password=password)
-#         return redirect("index_page")
-#     return render(request, "index.html")
 
-# def Update(request, pk):
-#     items = get_list_or_404(TestUserCrud, pk)
-#     if request.method == "POST":
-#         items.name = request.POST.get("name")
-#         items.email = request.POST.get("email")
-#         items.save()
-#         return redirect("index_page")
-#     return redirect(request, "index.html", {"items": items})
+def add(request):
+    if request.method == 'POST':
+        form = PeopleForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('list_page')
+    else:
+        form = PeopleForm()
+    return render(request, 'add.html', {'form': form})
 
-def Delete(request, pk):
-    items = get_list_or_404(TestUserCrud, pk)
-    if request.method == "POST":
-        items.delete()
-        return redirect("index_page")
-    return render(request, "index.html", {"items": items})
+def edit(request, person_id):
+    person = get_object_or_404(PeopleM, id=person_id)
+    
+    if request.method == 'POST':
+        form = PeopleForm(request.POST, request.FILES, instance=person)  
+        if form.is_valid():
+            form.save()  
+            return redirect('list_page')  
+    else:  
+        form = PeopleForm(instance=person)
+    
+    return render(request, 'edit.html', {'form': form, 'person': person})
+
+
+def delete(request, person_id):
+    person = get_object_or_404(PeopleM, id=person_id)
+    
+    if request.method == 'POST':
+        person.delete()  
+        return redirect('list_page')  
+    
+    return render(request, 'confirmDelete.html', {'person': person})  
